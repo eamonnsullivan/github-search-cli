@@ -10,20 +10,24 @@
 (defn usage [options-summary]
   (string/join \newline
                ["Get information about Github repositories in a given organisation,"
-                "optionally tagged with the given topics."
+                "tagged with the given topics."
                 "You must have a valid GITHUB_ACCESS_TOKEN defined in your"
                 "environment."
                 ""
                 "There are two required arguments: A login or organisation name"
                 "and at least one topic. Multiple topics are separated by commas."
                 ""
-                "Usage: github-search-cli <org> --topics <topic>,<topic>"
+                "Usage: github-search-cli <org> <topic>,<topic>"
                 ""
                 "Options:"
                 options-summary]))
 
 (def cli-options
-  [["-h" "--help"]])
+  [["-p" "--page-size" "The desired page size"
+    :default 25
+    :parse-fn #(Integer/parseInt %)
+    :validate [#(< 1 % 1000) "Must be a number between 1 and 1000"]]
+   ["-h" "--help"]])
 
 (defn -main
   "Get information about Github repositories that match the criteria."
@@ -34,5 +38,6 @@
             topics (map string/trim (string/split (second arguments) #","))]
         (cond
           (:help options) (println (usage summary))
-          :else (search/get-repos access-token org topics)))
+          (:page-size options) (print (json/write-str (search/get-repos access-token org topics (:page-size options))))
+          :else (print (json/write-str (search/get-repos access-token org topics)))))
         (println (usage summary)))))

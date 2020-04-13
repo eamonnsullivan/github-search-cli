@@ -14,7 +14,7 @@ The library assumes your Github access token is defined in your environment as G
 
 Run the project directly:
 
-    $ clojure -m eamonnsullivan.github-search-cli "my-org"
+    $ clojure -m eamonnsullivan.github-search-cli my-org topic1,topic2,topic3
 
 Run the project's tests
 
@@ -26,11 +26,11 @@ Build an uberjar:
 
 Run that uberjar:
 
-    $ java -jar github-search-cli.jar "my-org"
+    $ java -jar github-search-cli.jar my-org topic1,topic2,topic3
 
 ## Options
 
-    -t or --topic "topicname"
+    -p or --page-size <num> sets paging size (default 25)
 
 ## Examples
 
