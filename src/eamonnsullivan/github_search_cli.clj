@@ -38,6 +38,5 @@
             topics (map string/trim (string/split (second arguments) #","))]
         (cond
           (:help options) (println (usage summary))
-          (:page-size options) (print (json/write-str (search/get-repos access-token org topics (:page-size options))))
-          :else (print (json/write-str (search/get-repos access-token org topics)))))
+          :else (print (json/pprint (search/get-repos access-token org topics (:page-size options))))))
         (println (usage summary)))))
