@@ -2,7 +2,7 @@
   (:require [clojure.string :as string]
             [clojure.tools.cli :refer [parse-opts]]
             [clojure.data.json :as json]
-            [eamonnsullivan.github-search :as search])
+            [eamonnsullivan.github-api-lib.repo-search :as search])
   (:gen-class))
 
 (def access-token (System/getenv "GITHUB_ACCESS_TOKEN"))
